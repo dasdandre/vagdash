@@ -50,7 +50,7 @@
             <p class="event received">Device is Ready</p>
         </div>
     </div>
-    <script src="http://192.168.1.20:8080/target/target-script-min.js#anonymous"></script>
+    <script src="http://192.168.178.30:8080/target/target-script-min.js#anonymous"></script>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
