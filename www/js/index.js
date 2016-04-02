@@ -87,6 +87,7 @@ var app = {
 
     },
 
+    boostVal:100,
     initChart: function() {
         app.cboost = new SmoothieChart({ millisPerPixel: 28, labels: { fillStyle: '#ff0000' },
             grid: {
@@ -102,7 +103,7 @@ var app = {
         
         // Add a random value to each line every second
         setInterval(function() {
-            app.cboostseries.append(new Date().getTime(), Math.random());  
+            app.cboostseries.append(new Date().getTime(), app.boostVal);  
         }, 1000);
         
         app.cboost.addTimeSeries(app.cboostseries, { lineWidth: 2, strokeStyle: '#ff0000', fillStyle: 'rgba(255,0,0,0.30)' });
@@ -156,11 +157,20 @@ var app = {
         var notEnabled = function() {
             console.log("Bluetooth is not enabled.");
         };
-
+        
         bluetoothSerial.isEnabled(
             listPorts,
             notEnabled
         );
+        
+        var serialLineReceived = function(data){           
+            app.boostVal= parseInt(data);
+        };        
+        
+        bluetoothSerial.subscribe('\n', serialLineReceived, function (err){Materialze.toast("Fehler beim Empfangen von Daten",3000);            
+        });
+        
+        bluetoothSerial.connect("20:15:05:21:18:10",function(){console.log("connected");},function(){console.log("connection failed");});
     }
 
 };
