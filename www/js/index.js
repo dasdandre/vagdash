@@ -33,7 +33,48 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        app.receivedEvent('deviceready');
+
+        var grpm = new JustGage({
+            id: "grpm",
+            value: getRandomInt(0, 4000),
+            min: 0,
+            max: 8000,
+            title: "RPM",
+            label: "",
+            relativeGaugeSize: true
+        });
+        
+        var gwater = new JustGage({
+            id: "gwater",
+            value: getRandomInt(60, 120),
+            min: 60,
+            max: 120,
+            title: "WATER",
+            label: "",
+            relativeGaugeSize: true
+        });
+        
+        var gvolt = new JustGage({
+            id: "gvolt",
+            value: getRandomInt(100, 150),
+            min: 100,
+            max: 150,
+            title: "VOLTS",
+            label: "",
+            relativeGaugeSize: true
+        });
+        
+        var gboost = new JustGage({
+            id: "gboost",
+            value: getRandomInt(60, 120),
+            min: 60,
+            max: 120,
+            title: "BOOST",
+            label: "",
+            relativeGaugeSize: true
+        });
+
+
 
         // check to see if Bluetooth is turned on.
         // this function is called only
@@ -65,16 +106,5 @@ var app = {
         //     listPorts,
         //     notEnabled
         // );
-    },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
     }
 };

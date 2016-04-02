@@ -40,20 +40,21 @@
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
 
     <link rel="stylesheet" type="text/css" href="css/index.css" />
-    
+
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
-    
+
     <title>VAG Dash</title>
 </head>
 
 <body>
 
-   <div class='container'>
-        <h1 class='center-align'>Welcome to VAG Dash</h1>
-        <p class='flow-text center-align'>This is an experiment to test out materialize in a PhoneGap build (coincidentally powered by Phone Gap Build). Enjoy!</p>
-        <div class='center-align'>
-        <button class='btn waves-effect waves-light' onclick="toast('Hello World!', 4000)">Say Hi!</button>
+    <div class='container'>
+        <div class="row">
+            <div id="grpm" class="col s6"></div>
+            <div id="gwater" class="col s6"></div>
+            <div id="gvolt" class="col s6"></div>
+            <div id="gboost" class="col s6"></div>
         </div>
     </div>
 
