@@ -88,7 +88,7 @@ var app = {
     },
     
     initChart: function() {
-        app.cboost = new SmoothieChart({ millisPerPixel: 28, labels: { fillStyle: '#ff0000' },
+        app.cboost = new SmoothieChart({ millisPerPixel: 15, labels: { fillStyle: '#ff0000' },
             grid: {
                     fillStyle:'#ffffff',
                     strokeStyle:'#dddddd',
@@ -98,12 +98,12 @@ var app = {
                     borderVisible:false
                 }, 
                 maxValue:1000,
-                minValue:0
+                minValue:0                
         });
               
         app.cboostseries = new TimeSeries();    
         app.cboost.addTimeSeries(app.cboostseries, { lineWidth: 2, strokeStyle: '#ff0000', fillStyle: 'rgba(255,0,0,0.30)' });
-        app.cboost.streamTo(document.getElementById('cboost'), 500);
+        app.cboost.streamTo(document.getElementById('cboost'), 0);
     },
 
 
@@ -161,6 +161,7 @@ var app = {
         
         var serialLineReceived = function(data){           
             app.cboostseries.append(new Date().getTime(), parseInt(data));
+            app.grpm.refresh(parseInt(data)*8);
         };        
         
         bluetoothSerial.subscribe('\n', serialLineReceived, function (err){Materialze.toast("Fehler beim Empfangen von Daten",3000);            
