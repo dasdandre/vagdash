@@ -48,6 +48,8 @@ var app = {
             title: "RPM",
             titleFontFamily: "LCD-Display-Grid",
             valueFontFamily: "LCD-Display-Grid",
+            refreshAnimationTime:100,
+            refreshAnimationType:'linear',            
             relativeGaugeSize: true
         });
 
@@ -91,19 +93,20 @@ var app = {
         app.cboost = new SmoothieChart({ millisPerPixel: 15, labels: { fillStyle: '#ff0000' },
             grid: {
                     fillStyle:'#ffffff',
-                    strokeStyle:'#dddddd',
+                    strokeStyle:'#ffffff',
                     millisPerLine: 1000, 
                     lineWidth: 0,
-                    verticalSections: 10,
+                    verticalSections: 0,
                     borderVisible:false
                 }, 
+                interpolation:'step',
                 maxValue:1000,
                 minValue:0                
         });
               
         app.cboostseries = new TimeSeries();    
-        app.cboost.addTimeSeries(app.cboostseries, { lineWidth: 2, strokeStyle: '#ff0000', fillStyle: 'rgba(255,0,0,0.30)' });
-        app.cboost.streamTo(document.getElementById('cboost'), 0);
+        app.cboost.addTimeSeries(app.cboostseries, { lineWidth: 2, strokeStyle: '#ff0000', fillStyle: 'rgba(255,0,0,0.50)' });
+        app.cboost.streamTo(document.getElementById('cboost'), 50);
     },
 
 
