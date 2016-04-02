@@ -17,6 +17,13 @@
  * under the License.
  */
 var app = {
+    grpm: null,
+    gwater: null,
+    goil: null,
+    gvolt: null,
+    cboost: null,
+    cboostseries: null,
+
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -28,53 +35,107 @@ var app = {
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
+
+
+
+    // Initialize Gages
+    initGage: function() {
+        app.grpm = new JustGage({
+            id: "grpm",
+            value: getRandomInt(0, 4000),
+            min: 0,
+            max: 8000,
+            title: "RPM",
+            titleFontFamily: "LCD-Display-Grid",
+            valueFontFamily: "LCD-Display-Grid",
+            relativeGaugeSize: true
+        });
+
+        app.gwater = new JustGage({
+            id: "gwater",
+            value: getRandomInt(60, 120),
+            min: 60,
+            max: 120,
+            title: "WATER",
+            titleFontFamily: "LCD-Display-Grid",
+            valueFontFamily: "LCD-Display-Grid",
+            relativeGaugeSize: true
+        });
+
+        app.gvolt = new JustGage({
+            id: "gvolt",
+            value: 10 + (Math.random() * 5),
+            min: 10.0,
+            max: 15.0,
+            title: "VOLTS",
+            titleFontFamily: "LCD-Display-Grid",
+            valueFontFamily: "LCD-Display-Grid",
+            decimals: 1,
+            relativeGaugeSize: true
+        });
+
+        app.goil = new JustGage({
+            id: "goil",
+            value: getRandomInt(60, 120),
+            min: 60,
+            max: 120,
+            title: "OIL",
+            titleFontFamily: "LCD-Display-Grid",
+            valueFontFamily: "LCD-Display-Grid",
+            relativeGaugeSize: true
+        });
+
+    },
+
+    initChart: function() {
+        app.cboost = new SmoothieChart({ millisPerPixel: 28, labels: { fillStyle: '#ff0000' },
+            grid: {
+                    fillStyle:'#ffffff',
+                    strokeStyle:'#dddddd',
+                    millisPerLine: 250, 
+                    lineWidth: 0,
+                    verticalSections: 9
+                } 
+        });
+              
+        app.cboostseries = new TimeSeries();
+        
+        // Add a random value to each line every second
+        setInterval(function() {
+            app.cboostseries.append(new Date().getTime(), Math.random());  
+        }, 1000);
+        
+        app.cboost.addTimeSeries(app.cboostseries, { lineWidth: 2, strokeStyle: '#ff0000', fillStyle: 'rgba(255,0,0,0.30)' });
+        app.cboost.streamTo(document.getElementById('cboost'), 500);
+    },
+
+
+
+
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
 
-        var grpm = new JustGage({
-            id: "grpm",
-            value: getRandomInt(0, 4000),
-            min: 0,
-            max: 8000,
-            title: "RPM",
-            label: "",
-            relativeGaugeSize: true
-        });
-        
-        var gwater = new JustGage({
-            id: "gwater",
-            value: getRandomInt(60, 120),
-            min: 60,
-            max: 120,
-            title: "WATER",
-            label: "",
-            relativeGaugeSize: true
-        });
-        
-        var gvolt = new JustGage({
-            id: "gvolt",
-            value: getRandomInt(100, 150),
-            min: 100,
-            max: 150,
-            title: "VOLTS",
-            label: "",
-            relativeGaugeSize: true
-        });
-        
-        var gboost = new JustGage({
-            id: "gboost",
-            value: getRandomInt(60, 120),
-            min: 60,
-            max: 120,
-            title: "BOOST",
-            label: "",
-            relativeGaugeSize: true
-        });
+        app.initGage();
+        app.initChart();
 
+        //Get the canvas & context
+        var c = $('#cboost');
+        var ct = c.get(0).getContext('2d');
+        var container = $(c).parent();
 
+        //Run function when browser resizes
+        $(window).resize(respondCanvas);
+
+        function respondCanvas() {
+            c.attr('width', $(container).width()); //max width
+            c.attr('height', $(container).height()); //max height        
+        }
+
+        //Initial call 
+        respondCanvas();
 
         // check to see if Bluetooth is turned on.
         // this function is called only
@@ -92,19 +153,14 @@ var app = {
             );
         };
 
-        console.log("Kerlokiste " + new Date());
-
-
-        console.log("Hasi b" + JSON.stringify(bluetoothSerial));
-
         var notEnabled = function() {
             console.log("Bluetooth is not enabled.");
         };
 
-        // check if Bluetooth is on:
-        // bluetoothSerial.isEnabled(
-        //     listPorts,
-        //     notEnabled
-        // );
+        bluetoothSerial.isEnabled(
+            listPorts,
+            notEnabled
+        );
     }
+
 };
