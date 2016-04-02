@@ -34,12 +34,12 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-	
-	// check to see if Bluetooth is turned on.
+
+        // check to see if Bluetooth is turned on.
         // this function is called only
         //if isEnabled(), below, returns success:
         var listPorts = function() {
-	    console.log("trying to list ports");
+            console.log("trying to list ports");
             // list the available BT ports:
             bluetoothSerial.list(
                 function(results) {
@@ -51,20 +51,20 @@ var app = {
             );
         };
 
-	console.log("Kerlokiste " + new Date());
+        console.log("Kerlokiste " + new Date());
 
-      
-	console.log("Hasi b" +JSON.stringify(bluetoothSerial));
-	
+
+        console.log("Hasi b" + JSON.stringify(bluetoothSerial));
+
         var notEnabled = function() {
             console.log("Bluetooth is not enabled.");
-        };		   	    
+        };
 
-         // check if Bluetooth is on:
-       // bluetoothSerial.isEnabled(
-       //     listPorts,
-       //     notEnabled
-       // );
+        // check if Bluetooth is on:
+        // bluetoothSerial.isEnabled(
+        //     listPorts,
+        //     notEnabled
+        // );
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
