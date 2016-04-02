@@ -93,10 +93,13 @@ var app = {
             grid: {
                     fillStyle:'#ffffff',
                     strokeStyle:'#dddddd',
-                    millisPerLine: 250, 
+                    millisPerLine: 1000, 
                     lineWidth: 0,
-                    verticalSections: 9
-                } 
+                    verticalSections: 10,
+                    borderVisible:false
+                }, 
+                maxValue:1000,
+                minValue:0
         });
               
         app.cboostseries = new TimeSeries();
