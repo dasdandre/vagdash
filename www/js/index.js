@@ -106,8 +106,8 @@ var app = {
         });
         
         setInterval(function(){
-            app.cboostseries.append(new Date().getTime(), boostVal);            
-            app.grpm.refresh(parseInt(data)*8);
+            app.cboostseries.append(new Date().getTime(), app.boostVal);            
+            app.grpm.refresh(app.boostVal*8);
         },100);
               
         app.cboostseries = new TimeSeries();    
