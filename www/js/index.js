@@ -86,8 +86,7 @@ var app = {
         });
 
     },
-
-    boostVal:100,
+    
     initChart: function() {
         app.cboost = new SmoothieChart({ millisPerPixel: 28, labels: { fillStyle: '#ff0000' },
             grid: {
@@ -102,13 +101,7 @@ var app = {
                 minValue:0
         });
               
-        app.cboostseries = new TimeSeries();
-        
-        // Add a random value to each line every second
-        setInterval(function() {
-            app.cboostseries.append(new Date().getTime(), app.boostVal);  
-        }, 1000);
-        
+        app.cboostseries = new TimeSeries();    
         app.cboost.addTimeSeries(app.cboostseries, { lineWidth: 2, strokeStyle: '#ff0000', fillStyle: 'rgba(255,0,0,0.30)' });
         app.cboost.streamTo(document.getElementById('cboost'), 500);
     },
@@ -167,13 +160,13 @@ var app = {
         );
         
         var serialLineReceived = function(data){           
-            app.boostVal= parseInt(data);
+            app.cboostseries.append(new Date().getTime(), parseInt(data));
         };        
         
         bluetoothSerial.subscribe('\n', serialLineReceived, function (err){Materialze.toast("Fehler beim Empfangen von Daten",3000);            
         });
         
-        bluetoothSerial.connect("20:15:05:21:18:10",function(){console.log("connected");},function(){console.log("connection failed");});
+        bluetoothSerial.connect("20:15:05:18:21:10",function(){console.log("connected");},function(){console.log("connection failed");});
     }
 
 };
